@@ -1,0 +1,1 @@
+"I:\My Drive\AUC Drive\Entrepreneurship\Freelancing\scraping_gigs\venv_scraping\Scripts\python.exe" "I:\My Drive\AUC Drive\Entrepreneurship\Freelancing\scraping_gigs\andre_image_downloads\download_images.py"

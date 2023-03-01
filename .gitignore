@@ -1,0 +1,7 @@
+.env
+*.mp4
+.Rhistory
+script.R
+test.py
+*.gdoc
+*.tif
