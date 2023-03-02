@@ -97,8 +97,24 @@ Phew. This was a lot. I hope you're hanging in there with all of these instructi
 
 1. Set the inputs in the `.env` file
 2. Run the Python script from VSCode or from R using the instructions stated above
-  - It is better to **first download the .tiff files** and then **run the R script** to extract the **mean_light_intensities**. This is because the Python script runs in parallel whereas the R script's for loop runs sequentially. To reconcile the two, the Python script has to be amended to download files sequentially. However, if we do that, it will take between 5-7 days to download all the .tiff files, assuming you only want to download one year worth of data
-  -  Since this is a very long time, it is better to run the Python script in parallel to **download ALL the .tiff files first**, then use the R script to do the cropping. To do this, there are three options:
-    -  Use an **external hard drive**
-    -  Use a **Google Drive folder synced to your desktop** (assuming you have a G-mail premium account, which gives you access to **2 TB of storage**)
-    -  Run the **Python + R scripts in batches**, manually deleting the downloaded files after you extract all the light intensities
+    - It is better to **first download the .tiff files** and then **run the R script** to extract the **mean_light_intensities**. This is because the Python script runs in parallel whereas the R script's for loop runs sequentially.
+    
+      To reconcile the two, the Python script has to be amended to **download files sequentially**. However, if we do that, it will take between **5-7 days to download all the .tiff files**, and that's only for **one year worth of data**
+    -  Since this is a very long time, it is better to run the Python script in parallel to **download ALL the .tiff files first**, then **use the R script to do the cropping**. To do this, there are three options:
+        -  Use an **external hard drive**
+        -  Use a **Google Drive folder synced to your desktop** (assuming you have a G-mail premium account, which gives you access to **2 TB of storage**)
+        -  Run the **Python + R scripts in batches**, manually deleting the downloaded files after you extract all the light intensities
+        If you choose the last step, the only part you will need to amend in the Python script `download_images.py` is **line 101**
+        ```python
+        # This statement downloads ALL the files
+        Parallel(n_jobs=int(os.getenv("pages_to_download_at_once")), verbose=13)(delayed(download_func)(date=date) for date in dates)
+        
+        # This statement downloads the first .tiff file 20180101
+        Parallel(n_jobs=int(os.getenv("pages_to_download_at_once")), verbose=13)(delayed(download_func)(date=date) for date in dates[0:1])
+        
+        # This statement downloads the first 5 .tiff files 20180101, 20180102, 20180103, 20180104, 20180105
+        Parallel(n_jobs=int(os.getenv("pages_to_download_at_once")), verbose=13)(delayed(download_func)(date=date) for date in dates[0:5])
+        
+        # Note: The first index in Python starts with 0, not 1 as in R. Also, the right number in a range is NOT inclusive
+        # This means that 0:5 gives you 0, 1, 2, 3, 4 instead of 0, 1, 2, 3, 4, 5 like in R
+        ```
