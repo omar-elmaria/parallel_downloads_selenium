@@ -98,7 +98,7 @@ def download_func(date):
             break
 
 # Run the function in parallel
-Parallel(n_jobs=int(os.getenv("pages_to_download_at_once")), verbose=13)(delayed(download_func)(date=date) for date in dates[0:1])
+Parallel(n_jobs=int(os.getenv("pages_to_download_at_once")), verbose=13)(delayed(download_func)(date=date) for date in dates)
 
 # print a success message that the program finished running
 print("Finished downloading all the tiff files. Terminating the program...")
