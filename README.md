@@ -96,6 +96,9 @@ The R script only uses **one date** and **one tiff file** to extract the mean li
 Phew. This was a lot. I hope you're hanging in there with all of these instructions. In this section, I want to summarize how the workflow should look like after all the installations are done so you can can leave to run overnight.
 
 1. Set the inputs in the `.env` file
-2. Edit the `full_script_template.R` file, specifying the working directory and adding any additional logic
-3. Run the `full_script_template.R`
-- This operation runs the Python script, downloads the **.tiff** files, and extracts the mean light intensities of the downloaded file
+2. Run the Python script from VSCode or from R using the instructions stated above
+  - It is better to **first download the .tiff files** and then **run the R script** to extract the **mean_light_intensities**. This is because the Python script runs in parallel whereas the R script's for loop runs sequentially. To reconcile the two, the Python script has to be amended to download files sequentially. However, if we do that, it will take between 5-7 days to download all the .tiff files, assuming you only want to download one year worth of data
+  -  Since this is a very long time, it is better to run the Python script in parallel to **download ALL the .tiff files first**, then use the R script to do the cropping. To do this, there are three options:
+    -  Use an **external hard drive**
+    -  Use a **Google Drive folder synced to your desktop** (assuming you have a G-mail premium account, which gives you access to **2 TB of storage**)
+    -  Run the **Python + R scripts in batches**, manually deleting the downloaded files after you extract all the light intensities
