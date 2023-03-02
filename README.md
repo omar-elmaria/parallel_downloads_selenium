@@ -68,3 +68,34 @@ The first command **creates the virtual environment** and the **second one activ
 - If you create a `test.py` file, you should see the **Python version** and **name of the virtual environment**
 
 ![image](https://user-images.githubusercontent.com/98691360/222266917-2f9ebfc4-f4bc-42df-8599-b17735a381d5.png)
+
+## Step 3.4: How to Install the Chrome driver to run Python Selenium?
+You can follow the instructions in this 3-minute [video](https://www.youtube.com/watch?v=2WVxzRD6Ds4) to install the Chrome webdriver on your computer so you can run Selenium. The video mentions the version of Chrome. You can find that by pasting this URL into your normal Chrome search bar `chrome://settings/help`. The version should appear right away in the **About Chrome** section.
+
+![image](https://user-images.githubusercontent.com/98691360/222534117-5c5d4a8b-28a1-4832-8d65-4b63c92f16f9.png)
+
+## Step 3.4: Call the Python script from R
+To call the Python script from R, you need to run the following two commands from your R script
+```r
+setwd("INSERT_PATH_TO_YOUR_WORKING_DIRECTORY") # Don't remove the double-quotes
+shell.exec(file.path(getwd(), "python_bat.bat"))
+```
+
+The batch file itself need to have this command. The command takes the **Python executable** from the virtual environment and uses it to run the `download_images.py` file
+```
+"{INSERT_PATH_TO_VIRTUAL_ENVIRONMENT_FOLDER}\venv_light_intensity\Scripts\python.exe" "{INSERT_PATH_TO_WORKING_DIRECTORY}\download_images.py"
+```
+**P.S.** Don't forget the double-quotes. Also, you might need to replace the backslashes with forward slashes if you are on Windows
+
+## Step 3.5: **How to Solve the Cropping Problem?**
+In the repo, you will find a fully working version of the R code in the `cropping_function_demo.R` file. I believe the problem has to do with the .shp file you use in your script. What I did is that I extracted the country polygons from an R dataset called `wrld_simpl` and it worked like a charm.
+
+The R script only uses **one date** and **one tiff file** to extract the mean light intensities because it is meant to show an illustrative example. What you will need to do is parametrize the date as you do in your original R script via a loop.
+
+# Complete Workflow
+Phew. This was a lot. I hope you're hanging in there with all of these instructions. In this section, I want to summarize how the workflow should look like after all the installations are done so you can can leave to run overnight.
+
+1. Set the inputs in the `.env` file
+2. Edit the `full_script_template.R` file, specifying the working directory and adding any additional logic
+3. Run the `full_script_template.R`
+- This operation runs the Python script, downloads the **.tiff** files, and extracts the mean light intensities of the downloaded file
