@@ -13,6 +13,7 @@ With this written documentation, you will learn how to:
 You have **six files** in this repo.
 - `download_images.py` --> The Python script that **downloads images in parallel**
 - `cropping_function_demo.R` --> The R file that contains the code to calculate the **mean light intensity per country**
+- `r_script_template.R` --> The R file that contains a template you can to do the cropping. It basically uses some of your original code with the code from `cropping_function_demo.R`
 - `python_bat.bat` --> The batch file that will be used to **call the Python file from R**
 - `.gitignore` --> The file that contains the **directories** and **files** to be ignored **before publishing to GitHub**
 - `.RData` --> The file that contains the **history of the R file** from the last time I ran it so you can see **how the final dataset looks like**
